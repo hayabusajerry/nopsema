@@ -1,7 +1,0 @@
-#cloud-config
-autoinstall:
-    version: 1
-    identity:
-        hostname: hostname
-        username: username
-        password: $crypted_pass
