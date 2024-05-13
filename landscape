@@ -54,7 +54,7 @@ autoinstall:
     search_drivers: false
   ssh:
     allow-pw: true
-    authorized-keys: []
+    authorized-keys: [ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDIArpnnfDHsgNxEVVjQa2jsqdwqpo7WajcDaU8VHGMmZuECsyU2X1+vdavoK8PObGFaoPeI5yLLiDWCKdPEMsg9s5JBui05tevHwmGBqDxTBf3RJui5J9bpV+V8XLIiYSGbdxDzc74Ue9e65iU6Z+GedWjrUYlysKit5dlD/m/y8cneP68Bf+sIMVrOvWTu3x5H5FHs0hmZQ5XTYh1arsLWqfy1CWtfNsNBT4CfypfUWe9mf0hXX5rRWgDV5PmnsOMwv5c8Lp3RyM/pleKDRSiP/v1ilMOkJsRCJ56ptOP6rOhNwgxF7dw5oamn1llXXhbHGUEBfNIib1yGBsJnDcfrejRubbexledLBcEyzhFMsCOntesVNRZtR+fmFnU76hPyR1R3CTdcZjNiIWEA63EWP87V+9w/zUFq+Ldzmv0ClzkngenfNERQ/zdJikQIzYFCf7FSw3QKC0qsi0/C7LHBZSeFd0LeaolURYyBuaCK+r2+WP2aBCYfdfD9+UpWK8= jerry@rafiki]
     install-server: true
   storage:
     config:
@@ -131,6 +131,7 @@ autoinstall:
   updates: security
 
 
+version: 1
 # SET OUR VARIABLES FOR LANDSCAPE
 # =================
 
@@ -212,9 +213,6 @@ snap:
    - ['install', 'certbot', '--classic', '--channel', 'latest/stable']
 
 runcmd:
-{% if platform == 'oracle' %}
-  - iptables -F && netfilter-persistent save
-{% endif %}
   - certbot --non-interactive --apache --no-redirect --agree-tos --email {{ EMAIL }} --domains {{ FQDN }}
 {% if SMTP_HOST %}
   - postconf -e myhostname="{{ FQDN }}"
@@ -241,4 +239,3 @@ runcmd:
 timezone: {{ TIMEZONE }}
 {% endif %}
 
-version: 1
