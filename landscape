@@ -31,7 +31,6 @@ autoinstall:
   drivers:
     install: false
   identity:
-    hostname: landscape
     password: $6$RycIl1LwdIHXoBIM$q4U9MgvHZCR.KJeeocDVlT2gUkawZRNIMYtTecEg9AYL2sSMv.1TRJTQbs0IoeL.PfFiomhR0dtFySfwoeIC61
     realname: Jerry Carter
     username: jerry
@@ -206,6 +205,7 @@ apt:
 # `apt install`
 packages:
   - landscape-server-quickstart
+  - network-manager
 
 # `snap install`
 snap:
