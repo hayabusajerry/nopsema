@@ -145,21 +145,21 @@ autoinstall:
 {% set HOSTNAME = 'landscape' %}
 
 # DOMAIN (e.g. `yourdomain.com`)
-{% set DOMAIN = 'yourdomain.com' %}
+{% set DOMAIN = 'perseus-it.lan' %}
 
 # TIMEZONE: as represented in /usr/share/zoneinfo. An empty string ('') will result in UTC time being used.
-{% set TIMEZONE = 'America/New_York' %}
+{% set TIMEZONE = 'Australia/Perth' %}
 
 # SMTP credentials
 # SendGrid example:
 {% set SMTP_HOST = 'smtp.sendgrid.net' %}
 {% set SMTP_PORT = '587' %}
 {% set SMTP_USERNAME = 'apikey' %} # 'apikey' is the correct username for SendGrid
-{% set SMTP_PASSWORD = '' %} # Use an API Key from: https://app.sendgrid.com/settings/api_keys
+{% set SMTP_PASSWORD = ''dddd %} # Use an API Key from: https://app.sendgrid.com/settings/api_keys
 
 # Landscape version:
 # (23.03|beta)
-{% set LANDSCAPE_VERSION = '23.03' %}
+{% set LANDSCAPE_VERSION = '24.04' %}
 
 # =========================
 # END OF SETTING VARIABLES
