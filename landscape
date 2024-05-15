@@ -129,8 +129,6 @@ autoinstall:
       type: mount
   updates: security
 
-
-version: 1
 # SET OUR VARIABLES FOR LANDSCAPE
 # =================
 
@@ -238,4 +236,4 @@ runcmd:
 {% if "/" in TIMEZONE %}
 timezone: {{ TIMEZONE }}
 {% endif %}
-
+version: 1
