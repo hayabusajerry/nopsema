@@ -1,6 +1,5 @@
 #cloud-config
 autoinstall:
-  version: 1
   apt:
     geoip: true
     mirror-selection:
@@ -20,6 +19,7 @@ autoinstall:
     install: false
   identity:
     hostname: landscape
+    fqdn: perseus-it.lan
     password: $6$RycIl1LwdIHXoBIM$q4U9MgvHZCR.KJeeocDVlT2gUkawZRNIMYtTecEg9AYL2sSMv.1TRJTQbs0IoeL.PfFiomhR0dtFySfwoeIC61
     realname: Jerry Carter
     username: jerry
@@ -130,3 +130,4 @@ autoinstall:
       id: mount-0
       type: mount
   updates: security
+  version: 1
