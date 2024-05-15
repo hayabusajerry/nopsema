@@ -10,7 +10,6 @@ autoinstall:
         - i386
         - default
         uri: http://archive.ubuntu.com/ubuntu/
-        search_dns: true
       sources: 
         landscape-ppa:
           source: ppa:landscape/self-hosted-24.04
