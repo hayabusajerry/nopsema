@@ -20,7 +20,6 @@ autoinstall:
     install: false
   identity:
     hostname: landscape
-    fqdn: perseus-it.lan
     password: $6$RycIl1LwdIHXoBIM$q4U9MgvHZCR.KJeeocDVlT2gUkawZRNIMYtTecEg9AYL2sSMv.1TRJTQbs0IoeL.PfFiomhR0dtFySfwoeIC61
     realname: Jerry Carter
     username: jerry
