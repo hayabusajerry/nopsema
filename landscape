@@ -1,36 +1,26 @@
-## template: jinja
 #cloud-config
 autoinstall:
   apt:
-    disable_components: []
-    fallback: offline-install
     geoip: true
     mirror-selection:
       primary:
       - country-mirror
-      - arches: &id001
+      - arches:
         - amd64
         - i386
+        - default
         uri: http://archive.ubuntu.com/ubuntu/
-      - arches: &id002
-        - s390x
-        - arm64
-        - armhf
-        - powerpc
-        - ppc64el
-        - riscv64
-        uri: http://ports.ubuntu.com/ubuntu-ports
-    preserve_sources_list: false
-    security:
-    - arches: *id001
-      uri: http://security.ubuntu.com/ubuntu/
-    - arches: *id002
-      uri: http://ports.ubuntu.com/ubuntu-ports
+        search_dns: true
+      sources: 
+        landscape-ppa:
+          source: ppa:landscape/self-hosted-24.04
   codecs:
     install: false
   drivers:
     install: false
   identity:
+    Hostname: landscape
+    fqdn: perseus-it.lan
     password: $6$RycIl1LwdIHXoBIM$q4U9MgvHZCR.KJeeocDVlT2gUkawZRNIMYtTecEg9AYL2sSMv.1TRJTQbs0IoeL.PfFiomhR0dtFySfwoeIC61
     realname: Jerry Carter
     username: jerry
@@ -51,6 +41,19 @@ autoinstall:
   source:
     id: ubuntu-server
     search_drivers: false
+  package_update: true
+  package_upgrade: true
+  packages:
+    - network-manager
+    - net-tools
+    - ca-certificates 
+    - software-properties-common
+  runcmd:
+    - sudo DEBIAN_FRONTEND=noninteractive apt-get install -y landscape-server-quickstart
+    - sudo snap install certbot --classic
+    - sudo certbot --apache --non-interactive --no-redirect --agree-tos --email jerry.carter@perseus-it.com --domains landscape.perseus-it.lan
+    - sudo apt install -y landscape-client
+    - sudo export LANDSCAPE_ACCOUNT_NAME='standalone'; sudo export LANDSCAPE_FQDN='landscape.perseus-it.lan'; sudo export LANDSCAPE_COMPUTER_TITLE='LNDSRV'; sudo landscape-config --silent --account-name="${LANDSCAPE_ACCOUNT_NAME}" --computer-title="${LANDSCAPE_COMPUTER_TITLE}" --tags='' --script-users='nobody,landscape,root' --ping-url="http://${LANDSCAPE_FQDN}/ping" --url="https://${LANDSCAPE_FQDN}/message-system"
   ssh:
     allow-pw: true
     authorized-keys: [ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDIArpnnfDHsgNxEVVjQa2jsqdwqpo7WajcDaU8VHGMmZuECsyU2X1+vdavoK8PObGFaoPeI5yLLiDWCKdPEMsg9s5JBui05tevHwmGBqDxTBf3RJui5J9bpV+V8XLIiYSGbdxDzc74Ue9e65iU6Z+GedWjrUYlysKit5dlD/m/y8cneP68Bf+sIMVrOvWTu3x5H5FHs0hmZQ5XTYh1arsLWqfy1CWtfNsNBT4CfypfUWe9mf0hXX5rRWgDV5PmnsOMwv5c8Lp3RyM/pleKDRSiP/v1ilMOkJsRCJ56ptOP6rOhNwgxF7dw5oamn1llXXhbHGUEBfNIib1yGBsJnDcfrejRubbexledLBcEyzhFMsCOntesVNRZtR+fmFnU76hPyR1R3CTdcZjNiIWEA63EWP87V+9w/zUFq+Ldzmv0ClzkngenfNERQ/zdJikQIzYFCf7FSw3QKC0qsi0/C7LHBZSeFd0LeaolURYyBuaCK+r2+WP2aBCYfdfD9+UpWK8= jerry@rafiki]
@@ -129,111 +132,3 @@ autoinstall:
       type: mount
   updates: security
 
-# SET OUR VARIABLES FOR LANDSCAPE
-# =================
-
-# EMAIL: required
-# Your email address to share with LetsEncrypt for your SSL Certificate
-{% set EMAIL = 'jerry.carter@perseus-it.com' %}
-
-# TOKEN: recommended
-# Ubuntu Pro token from: https://ubuntu.com/pro/dashboard (not needed for Ubuntu Pro instances on Azure, AWS, or Google Cloud)
-{% set TOKEN = '' %}
-
-# HOSTNAME: subdomain of FQDN (e.g. `server` for `server.yourdomain.com`)
-{% set HOSTNAME = 'landscape' %}
-
-# DOMAIN (e.g. `yourdomain.com`)
-{% set DOMAIN = 'perseus-it.lan' %}
-
-# TIMEZONE: as represented in /usr/share/zoneinfo. An empty string ('') will result in UTC time being used.
-{% set TIMEZONE = 'Australia/Perth' %}
-
-# SMTP credentials
-# SendGrid example:
-{% set SMTP_HOST = 'mail.perseus-it.com' %}
-{% set SMTP_PORT = '587' %}
-{% set SMTP_USERNAME = 'apikey' %} # 'apikey' is the correct username for SendGrid
-{% set SMTP_PASSWORD = ''dddd %} # Use an API Key from: https://app.sendgrid.com/settings/api_keys
-
-# Landscape version:
-# (23.03|beta)
-{% set LANDSCAPE_VERSION = '24.04' %}
-
-# =========================
-# END OF SETTING VARIABLES
-
-# FQDN is determined programmatically from the HOSTNAME and DOMAIN values (e.g. `yourdomain.com` or `server.yourdomain.com`)
-{% set FQDN = HOSTNAME ~ ('.' if HOSTNAME else '') ~ DOMAIN %}
-hostname: {{ HOSTNAME }}
-fqdn: {{ FQDN }}
-prefer_fqdn_over_hostname: true
-
-write_files:
-  - path: /etc/postfix/sasl_passwd
-    permissions: "0400"
-    content: |
-      [{{ SMTP_HOST }}]:{{ SMTP_PORT }} {{ SMTP_USERNAME }}:{{ SMTP_PASSWORD }}
-  - path: /etc/cron.d/certbot-renew
-    content: |
-      SHELL=/bin/bash
-      30 2 * * * root /snap/bin/certbot renew --non-interactive --post-hook "systemctl apache2 reload"
-
-ubuntu_advantage:
-{% if TOKEN %}
-  token: {{ TOKEN }}
-{% endif %}
-  enable:
-    - livepatch
-
-# `apt update`
-package_update: true
-
-# `apt upgrade`
-package_upgrade: true
-
-# restart if necessary
-package_reboot_if_required: true
-
-apt:
-  sources:
-      source1:
-          source: 'ppa:landscape/self-hosted-{{ LANDSCAPE_VERSION }}'
-
-# `apt install`
-packages:
-  - landscape-server-quickstart
-  - network-manager
-
-# `snap install`
-snap:
- commands:
-   - ['install', 'certbot', '--classic', '--channel', 'latest/stable']
-
-runcmd:
-  - certbot --non-interactive --apache --no-redirect --agree-tos --email {{ EMAIL }} --domains {{ FQDN }}
-{% if SMTP_HOST %}
-  - postconf -e myhostname="{{ FQDN }}"
-  - postconf -e mydomain="{{ DOMAIN }}"
-  - postconf -e myorigin="{{ DOMAIN }}"
-  - postconf -e masquerade_domains="{{ DOMAIN }}"
-  - postconf -e mydestination=localhost
-  - postconf -e default_transport=smtp
-  - postconf -e relay_transport=smtp
-  - postconf -e relayhost="[{{ SMTP_HOST }}]:{{ SMTP_PORT }}"
-  - postconf -e smtp_sasl_auth_enable=yes
-  - postconf -e smtp_sasl_password_maps=hash:/etc/postfix/sasl_passwd
-  - postconf -e header_size_limit=4096000
-  - postconf -e smtp_sasl_security_options=noanonymous
-  - postconf -e smtp_sasl_tls_security_options=noanonymous
-  - postconf -e smtp_tls_security_level=encrypt
-  - postconf -e smtp_use_tls=yes
-  - postmap /etc/postfix/sasl_passwd
-  - rm /etc/postfix/sasl_passwd
-  - /etc/init.d/postfix restart
-{% endif %}
-
-{% if "/" in TIMEZONE %}
-timezone: {{ TIMEZONE }}
-{% endif %}
-version: 1
