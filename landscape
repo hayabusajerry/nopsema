@@ -131,4 +131,4 @@ autoinstall:
       id: mount-0
       type: mount
   updates: security
-
+  version: 1
