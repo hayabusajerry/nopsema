@@ -1,8 +1,8 @@
 #cloud-config
-variables:
-  ServerName: landscape
-   
 autoinstall:
+  variables:
+    ServerName: landscape
+   
   apt:
     geoip: true
     mirror-selection:
