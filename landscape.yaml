@@ -51,33 +51,8 @@ autoinstall:
     authorized-keys: [ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDIArpnnfDHsgNxEVVjQa2jsqdwqpo7WajcDaU8VHGMmZuECsyU2X1+vdavoK8PObGFaoPeI5yLLiDWCKdPEMsg9s5JBui05tevHwmGBqDxTBf3RJui5J9bpV+V8XLIiYSGbdxDzc74Ue9e65iU6Z+GedWjrUYlysKit5dlD/m/y8cneP68Bf+sIMVrOvWTu3x5H5FHs0hmZQ5XTYh1arsLWqfy1CWtfNsNBT4CfypfUWe9mf0hXX5rRWgDV5PmnsOMwv5c8Lp3RyM/pleKDRSiP/v1ilMOkJsRCJ56ptOP6rOhNwgxF7dw5oamn1llXXhbHGUEBfNIib1yGBsJnDcfrejRubbexledLBcEyzhFMsCOntesVNRZtR+fmFnU76hPyR1R3CTdcZjNiIWEA63EWP87V+9w/zUFq+Ldzmv0ClzkngenfNERQ/zdJikQIzYFCf7FSw3QKC0qsi0/C7LHBZSeFd0LeaolURYyBuaCK+r2+WP2aBCYfdfD9+UpWK8= jerry@rafiki]
     install-server: true
   storage:
-    config:
-    - grub_device: true
-      id: disk-sda
-      path: /dev/sda
-      ptable: gpt
-      type: disk
-      wipe: superblock-recursive
-    - device: disk-sda
-      flag: bios_grub
-      id: partition-0
-      number: 1
-      size: 1048576
-      type: partition
-    - device: disk-sda
-      id: partition-1
-      number: 2
-      size: -1
-      type: partition
-      wipe: superblock
-    - fstype: ext4
-      id: format-0
-      type: format
-      volume: partition-1
-    - device: format-0
-      id: mount-0
-      path: /
-      type: mount
+    layout:
+      name: lvm
   updates: security
   
   late-commands:
