@@ -37,7 +37,7 @@ autoinstall:
       eth0:
         dhcp4: true
     version: 2
-    oem:
+  oem:
     install: auto
   source:
     id: ubuntu-server
