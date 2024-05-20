@@ -31,7 +31,7 @@ autoinstall:
     layout: us
     toggle: null
     variant: ''
-  timezone: AU/Perth
+  timezone: Australia/Perth
   locale: en_US.UTF-8
   network:
     ethernets:
