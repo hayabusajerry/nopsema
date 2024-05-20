@@ -47,6 +47,7 @@ autoinstall:
   packages:
     - net-tools
     - git
+    - ansible
   ansible:
     package_name: ansible-core
     pull: 
