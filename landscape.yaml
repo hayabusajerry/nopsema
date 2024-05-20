@@ -68,9 +68,10 @@ autoinstall:
         - sudo apt install -y realmd libnss-sss libpam-sss sssd sssd-tools adcli samba-common-bin oddjob oddjob-mkhomedir packagekit
         ##- sudo systemctl disable systemd-resolved.service 
         ##- sudo systemctl stop systemd-resolved.service
-        -  echo Bandit1200! | sudo realm join -U jerryad --client-software=sssd  perseus-it.lan
+        - echo Bandit1200! | sudo realm join -U jerryad --client-software=sssd  perseus-it.lan
         - sudo realm permit -g "Domain Users"@perseus-it.lan
         - sudo sed -i -e 's/use_fully_qualified_names = True/use_fully_qualified_names = False/g' /etc/sssd/sssd.conf
+        - sudo sed  -i -e '$a\'$'\n''session optional        pam_mkhomedir.so skel=/etc/skel umask=077' /etc/pam.d/common-session
         - sudo apt install -y ca-certificates software-properties-common
         - export HOST_NAME=landscape; export DOMAIN=perseus-it.lan; export FQDN=$HOST_NAME.$DOMAIN
         - sudo add-apt-repository -y ppa:landscape/self-hosted-24.04
