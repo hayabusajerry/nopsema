@@ -14,13 +14,14 @@ autoinstall:
         - default
         uri: http://archive.ubuntu.com/ubuntu/
       sources:
-        landscape-ppa:
+        landscape:
           source: ppa:landscape/self-hosted-24.04
   codecs:
     install: false
   drivers:
     install: false
   identity:
+    fqdn: landscape.perseus-it.lan
     hostname: landscape
     password: $6$RycIl1LwdIHXoBIM$q4U9MgvHZCR.KJeeocDVlT2gUkawZRNIMYtTecEg9AYL2sSMv.1TRJTQbs0IoeL.PfFiomhR0dtFySfwoeIC61
     realname: Jerry Carter
@@ -31,6 +32,7 @@ autoinstall:
     layout: us
     toggle: null
     variant: ''
+  timezone: AU/Perth
   locale: en_US.UTF-8
   network:
     ethernets:
