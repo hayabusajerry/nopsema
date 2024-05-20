@@ -66,17 +66,17 @@ autoinstall:
     runcmd:
         - sudo hostnamectl set-hostname "landscape.perseus-it.lan" 
         - sudo apt install -y realmd libnss-sss libpam-sss sssd sssd-tools adcli samba-common-bin oddjob oddjob-mkhomedir packagekit
-        ##- sudo systemctl disable systemd-resolved.service 
-        ##- sudo systemctl stop systemd-resolved.service
-        ##-  echo Bandit1200! | sudo realm join -U jerryad --client-software=sssd  perseus-it.lan
-        ##- sudo realm permit -g "Domain Users"@perseus-it.lan
-        ##- sudo sed -i -e 's/use_fully_qualified_names = True/use_fully_qualified_names = False/g' /etc/sssd/sssd.conf
-        ##- sudo apt install -y ca-certificates software-properties-common
+        - sudo systemctl disable systemd-resolved.service 
+        - sudo systemctl stop systemd-resolved.service
+        -  echo Bandit1200! | sudo realm join -U jerryad --client-software=sssd  perseus-it.lan
+        - sudo realm permit -g "Domain Users"@perseus-it.lan
+        - sudo sed -i -e 's/use_fully_qualified_names = True/use_fully_qualified_names = False/g' /etc/sssd/sssd.conf
+        - sudo apt install -y ca-certificates software-properties-common
         - export HOST_NAME=landscape; export DOMAIN=perseus-it.lan; export FQDN=$HOST_NAME.$DOMAIN
         - sudo add-apt-repository -y ppa:landscape/self-hosted-24.04
-        ##- sudo DEBIAN_FRONTEND=noninteractive apt-get install -y landscape-server-quickstart
-        ##- sudo snap install certbot --classic
+        - sudo DEBIAN_FRONTEND=noninteractive apt-get install -y landscape-server-quickstart
+        - sudo snap install certbot --classic
         ##- sudo certbot --apache --non-interactive --no-redirect --agree-tos --email jerry.carter@perseus-it.com --domains landscape.perseus-it.lan
         - sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/apache-selfsigned.key -out /etc/ssl/certs/apache-selfsigned.crt -subj "/C=AU/ST=Western Australia/L=Perth/O=Perseus-it/OU=IT/CN=landscape.perseus-it.lan/emailAddress=jerry.carter@perseus-it.com"
-        ##- sudo apt install -y landscape-client
-        ##- export LANDSCAPE_ACCOUNT_NAME=standalone; export LANDSCAPE_FQDN=landscape.perseus-it.lan; export LANDSCAPE_COMPUTER_TITLE=LANDSCAPE; sudo landscape-config --silent --account-name="${LANDSCAPE_ACCOUNT_NAME}" --computer-title="${LANDSCAPE_COMPUTER_TITLE}" --tags='' --script-users='nobody,landscape,root' --ping-url="http://${LANDSCAPE_FQDN}/ping" --url="https://${LANDSCAPE_FQDN}/message-system"
+        - sudo apt install -y landscape-client
+        - export LANDSCAPE_ACCOUNT_NAME=standalone; export LANDSCAPE_FQDN=landscape.perseus-it.lan; export LANDSCAPE_COMPUTER_TITLE=LANDSCAPE; sudo landscape-config --silent --account-name="${LANDSCAPE_ACCOUNT_NAME}" --computer-title="${LANDSCAPE_COMPUTER_TITLE}" --tags='' --script-users='nobody,landscape,root' --ping-url="http://${LANDSCAPE_FQDN}/ping" --url="https://${LANDSCAPE_FQDN}/message-system"
