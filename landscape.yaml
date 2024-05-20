@@ -55,7 +55,7 @@ autoinstall:
       name: lvm
   updates: security
   
-  bootcmd:
+  late-commands:
     - sudo hostnamectl set-hostname "landscape.perseus-it.lan" 
     - sudo apt install -y realmd libnss-sss libpam-sss sssd sssd-tools adcli samba-common-bin oddjob oddjob-mkhomedir packagekit
     ##- sudo systemctl disable systemd-resolved.service 
