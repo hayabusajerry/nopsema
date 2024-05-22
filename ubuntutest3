@@ -1,30 +1,15 @@
 #cloud-config
 autoinstall:
   apt:
-    disable_components: []
-    fallback: offline-install
     geoip: true
     mirror-selection:
       primary:
       - country-mirror
-      - arches: &id001
+      - arches:
         - amd64
         - i386
+        - default
         uri: http://archive.ubuntu.com/ubuntu/
-      - arches: &id002
-        - s390x
-        - arm64
-        - armhf
-        - powerpc
-        - ppc64el
-        - riscv64
-        uri: http://ports.ubuntu.com/ubuntu-ports
-    preserve_sources_list: false
-    security:
-    - arches: *id001
-      uri: http://security.ubuntu.com/ubuntu/
-    - arches: *id002
-      uri: http://ports.ubuntu.com/ubuntu-ports
   codecs:
     install: false
   drivers:
@@ -40,7 +25,7 @@ autoinstall:
     layout: us
     toggle: null
     variant: ''
-  locale: en_US.UTF-8
+  locale: en_AU.UTF-8
   network:
     ethernets:
       enp1s0:
