@@ -33,6 +33,13 @@ autoinstall:
     version: 2
   oem:
     install: auto
+  packages:
+    - linux-virtual
+    - linux-cloud-tools-virtual
+    - linux-tools-virtual
+    - net-tools
+    - git
+    - ansible   
   source:
     id: ubuntu-server
     search_drivers: false

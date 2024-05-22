@@ -61,6 +61,7 @@ autoinstall:
   storage:
     layout:
       name: lvm
+      sizing-policy: all
   updates: security
   user-data:
     runcmd:
