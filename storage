@@ -1,14 +1,14 @@
   storage:
     config:
-    - type: disk
-      match: 
-        size: largest
+    - serial: 360022480c816d455038ee2b041f6ba95
+      wwn: '0x60022480c816d455038ee2b041f6ba95'
       path: /dev/sdb
       wipe: superblock
       preserve: false
       name: ''
       grub_device: false
       id: disk-sdb
+      type: disk
     - name: vg1
       devices:
       - disk-sdb
@@ -29,13 +29,14 @@
       id: format-4
       type: format
     - ptable: gpt
+      serial: 3600224809efb604ca00287063df6c30e
+      wwn: '0x600224809efb604ca00287063df6c30e'
       path: /dev/sda
       preserve: true
+      name: ''
       grub_device: true
       id: disk-sda
       type: disk
-      match:
-        size: smallest
     - device: disk-sda
       size: 1048576
       flag: bios_grub
@@ -43,7 +44,9 @@
       preserve: true
       grub_device: false
       offset: 1048576
+      partition_type: 21686148-6449-6e6f-744e-656564454649
       path: /dev/sda1
+      uuid: f0e4c64f-18f4-4111-a886-f4b8b488e9c1
       id: partition-sda1
       type: partition
     - device: disk-sda
@@ -54,7 +57,9 @@
       preserve: true
       grub_device: false
       offset: 2097152
+      partition_type: 0fc63daf-8483-4772-8e79-3d69d8477de4
       path: /dev/sda2
+      uuid: 867afb86-9bc7-4f6d-99fb-fad05cd8fac2
       id: partition-sda2
       type: partition
     - fstype: ext4
@@ -69,7 +74,9 @@
       preserve: true
       grub_device: false
       offset: 1075838976
+      partition_type: 0fc63daf-8483-4772-8e79-3d69d8477de4
       path: /dev/sda3
+      uuid: ccb8c889-e0ac-4086-bd6e-5591fc4e3f2e
       id: partition-sda3
       type: partition
     - name: vg0
@@ -80,7 +87,7 @@
       type: lvm_volgroup
     - name: lv-0
       volgroup: lvm-volgroup-vg0
-      sizing-policy: all
+      size: 53687091200B
       wipe: superblock
       preserve: true
       path: /dev/vg0/lv-0
@@ -94,6 +101,23 @@
     - path: /
       device: format-1
       id: mount-1
+      type: mount
+    - name: lv-1
+      volgroup: lvm-volgroup-vg0
+      size: 31134318592B
+      wipe: superblock
+      preserve: true
+      path: /dev/vg0/lv-1
+      id: lvm-partition-lv-1
+      type: lvm_partition
+    - fstype: ext4
+      volume: lvm-partition-lv-1
+      preserve: false
+      id: format-2
+      type: format
+    - path: /home
+      device: format-2
+      id: mount-2
       type: mount
     - path: /data
       device: format-4

@@ -74,19 +74,21 @@ autoinstall:
       preserve: false
       id: format-4
       type: format
-    - type: disk
+    - ptable: gpt
+      wipe: superblock-recursive
+      preserve: false
+      name: ''
+      grub_device: true
+      type: disk
+      id: disk-sda 
       match:
         size: smallest
-      ptable: gpt
       path: /dev/sda
-      preserve: true
-      grub_device: true
-      id: disk-sda
     - device: disk-sda
       size: 1048576
       flag: bios_grub
       number: 1
-      preserve: true
+      preserve: false
       grub_device: false
       offset: 1048576
       path: /dev/sda1
@@ -110,7 +112,6 @@ autoinstall:
       type: format
     - device: disk-sda
       size: 84822458368
-      flag: linux
       number: 3
       preserve: true
       grub_device: false
@@ -126,7 +127,7 @@ autoinstall:
       type: lvm_volgroup
     - name: lv-0
       volgroup: lvm-volgroup-vg0
-      sizing-policy: all
+      size: -1
       wipe: superblock
       preserve: true
       path: /dev/vg0/lv-0
