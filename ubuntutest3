@@ -49,7 +49,7 @@ autoinstall:
     - type: disk
       match: 
         size: largest
-      path: /dev/sdb
+      #path: /dev/sdb
       wipe: superblock
       preserve: false
       name: ''
@@ -83,7 +83,7 @@ autoinstall:
       id: disk-sda 
       match:
         size: smallest
-      path: /dev/sda
+      #path: /dev/sda
     - device: disk-sda
       size: 1048576
       flag: bios_grub
@@ -91,7 +91,7 @@ autoinstall:
       preserve: false
       grub_device: false
       offset: 1048576
-      path: /dev/sda1
+      #path: /dev/sda1
       id: partition-sda1
       type: partition
     - device: disk-sda
@@ -102,7 +102,7 @@ autoinstall:
       preserve: true
       grub_device: false
       offset: 2097152
-      path: /dev/sda2
+      #path: /dev/sda2
       id: partition-sda2
       type: partition
     - fstype: ext4
@@ -116,7 +116,7 @@ autoinstall:
       preserve: true
       grub_device: false
       offset: 1075838976
-      path: /dev/sda3
+      #path: /dev/sda3
       id: partition-sda3
       type: partition
     - name: vg0
