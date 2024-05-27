@@ -74,14 +74,14 @@ autoinstall:
       preserve: false
       id: format-4
       type: format
-    - ptable: gpt
+    - type: disk
+      match:
+        size: smallest
+      ptable: gpt
       path: /dev/sda
       preserve: true
       grub_device: true
       id: disk-sda
-      type: disk
-      match:
-        size: smallest
     - device: disk-sda
       size: 1048576
       flag: bios_grub
