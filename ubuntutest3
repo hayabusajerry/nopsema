@@ -46,6 +46,34 @@ autoinstall:
     install-server: true
   storage:
     config:
+    - type: disk
+      match: 
+        size: largest
+      path: /dev/sdb
+      wipe: superblock
+      preserve: false
+      name: ''
+      grub_device: false
+      id: disk-sdb
+    - name: vg1
+      devices:
+      - disk-sdb
+      preserve: false
+      id: lvm_volgroup-0
+      type: lvm_volgroup
+    - name: lv-0
+      volgroup: lvm_volgroup-0
+      size: -1
+      wipe: superblock
+      preserve: false
+      path: /dev/vg1/lv-0
+      id: lvm_partition-0
+      type: lvm_partition
+    - fstype: ext4
+      volume: lvm_partition-0
+      preserve: false
+      id: format-4
+      type: format
     - ptable: gpt
       path: /dev/sda
       wipe: superblock-recursive
