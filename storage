@@ -1,49 +1,3 @@
-#cloud-config
-autoinstall:
-  apt:
-    geoip: true
-    mirror-selection:
-      primary:
-      - country-mirror
-      - arches:
-        - amd64
-        - i386
-        - default
-        uri: http://archive.ubuntu.com/ubuntu/
-  codecs:
-    install: false
-  drivers:
-    install: false
-  identity:
-    hostname: ubuntutest3
-    password: $6$RycIl1LwdIHXoBIM$q4U9MgvHZCR.KJeeocDVlT2gUkawZRNIMYtTecEg9AYL2sSMv.1TRJTQbs0IoeL.PfFiomhR0dtFySfwoeIC61
-    realname: Jerry Carter
-    username: jerry
-  kernel:
-    package: linux-generic
-  keyboard:
-    layout: us
-    toggle: null
-    variant: ''
-  locale: en_AU.UTF-8
-  network:
-    ethernets:
-      enp1s0:
-        dhcp4: true
-    version: 2
-  oem:
-    install: auto
-  packages:
-    - linux-virtual
-    - linux-cloud-tools-virtual
-    - linux-tools-virtual 
-  source:
-    id: ubuntu-server
-    search_drivers: false
-  ssh:
-    allow-pw: true
-    authorized-keys: [ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDIArpnnfDHsgNxEVVjQa2jsqdwqpo7WajcDaU8VHGMmZuECsyU2X1+vdavoK8PObGFaoPeI5yLLiDWCKdPEMsg9s5JBui05tevHwmGBqDxTBf3RJui5J9bpV+V8XLIiYSGbdxDzc74Ue9e65iU6Z+GedWjrUYlysKit5dlD/m/y8cneP68Bf+sIMVrOvWTu3x5H5FHs0hmZQ5XTYh1arsLWqfy1CWtfNsNBT4CfypfUWe9mf0hXX5rRWgDV5PmnsOMwv5c8Lp3RyM/pleKDRSiP/v1ilMOkJsRCJ56ptOP6rOhNwgxF7dw5oamn1llXXhbHGUEBfNIib1yGBsJnDcfrejRubbexledLBcEyzhFMsCOntesVNRZtR+fmFnU76hPyR1R3CTdcZjNiIWEA63EWP87V+9w/zUFq+Ldzmv0ClzkngenfNERQ/zdJikQIzYFCf7FSw3QKC0qsi0/C7LHBZSeFd0LeaolURYyBuaCK+r2+WP2aBCYfdfD9+UpWK8= jerry@rafiki]
-    install-server: true
   storage:
     config:
     - type: disk
@@ -63,7 +17,7 @@ autoinstall:
       type: lvm_volgroup
     - name: lv-0
       volgroup: lvm_volgroup-0
-      sizing-policy: all
+      size: 107369988096B
       wipe: superblock
       preserve: false
       path: /dev/vg1/lv-0
@@ -149,5 +103,3 @@ autoinstall:
       device: format-0
       id: mount-0
       type: mount
-  updates: security
-  version: 1
