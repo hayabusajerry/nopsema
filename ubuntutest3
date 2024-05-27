@@ -50,14 +50,15 @@ autoinstall:
       match: 
         size: largest
       #path: /dev/sdb
+      path: /dev/sda
       wipe: superblock
       preserve: false
       name: ''
       grub_device: false
-      id: disk-sdb
+      id: disk-sda
     - name: vg1
       devices:
-      - disk-sdb
+      - disk-sda
       preserve: false
       id: lvm_volgroup-0
       type: lvm_volgroup
@@ -80,11 +81,12 @@ autoinstall:
       name: ''
       grub_device: true
       type: disk
-      id: disk-sda 
+      id: disk-sdb 
       match:
         size: smallest
       #path: /dev/sda
-    - device: disk-sda
+      path: /dev/sdb
+    - device: disk-sdb
       size: 1048576
       flag: bios_grub
       number: 1
@@ -92,9 +94,10 @@ autoinstall:
       grub_device: false
       offset: 1048576
       #path: /dev/sda1
-      id: partition-sda1
+      path: /dev/sdb1
+      id: partition-sdb1
       type: partition
-    - device: disk-sda
+    - device: disk-sdb
       size: 1073741824
       wipe: superblock
       flag: linux
@@ -102,26 +105,26 @@ autoinstall:
       preserve: true
       grub_device: false
       offset: 2097152
-      #path: /dev/sda2
-      id: partition-sda2
+      path: /dev/sdb2
+      id: partition-sdb2
       type: partition
     - fstype: ext4
-      volume: partition-sda2
+      volume: partition-sdb2
       preserve: false
       id: format-0
       type: format
-    - device: disk-sda
+    - device: disk-sdb
       size: 84822458368
       number: 3
       preserve: true
       grub_device: false
       offset: 1075838976
-      #path: /dev/sda3
-      id: partition-sda3
+      path: /dev/sdb3
+      id: partition-sdb3
       type: partition
     - name: vg0
       devices:
-      - partition-sda3
+      - partition-sdb3
       preserve: true
       id: lvm-volgroup-vg0
       type: lvm_volgroup
