@@ -44,27 +44,26 @@ autoinstall:
     allow-pw: true
     authorized-keys: [ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDIArpnnfDHsgNxEVVjQa2jsqdwqpo7WajcDaU8VHGMmZuECsyU2X1+vdavoK8PObGFaoPeI5yLLiDWCKdPEMsg9s5JBui05tevHwmGBqDxTBf3RJui5J9bpV+V8XLIiYSGbdxDzc74Ue9e65iU6Z+GedWjrUYlysKit5dlD/m/y8cneP68Bf+sIMVrOvWTu3x5H5FHs0hmZQ5XTYh1arsLWqfy1CWtfNsNBT4CfypfUWe9mf0hXX5rRWgDV5PmnsOMwv5c8Lp3RyM/pleKDRSiP/v1ilMOkJsRCJ56ptOP6rOhNwgxF7dw5oamn1llXXhbHGUEBfNIib1yGBsJnDcfrejRubbexledLBcEyzhFMsCOntesVNRZtR+fmFnU76hPyR1R3CTdcZjNiIWEA63EWP87V+9w/zUFq+Ldzmv0ClzkngenfNERQ/zdJikQIzYFCf7FSw3QKC0qsi0/C7LHBZSeFd0LeaolURYyBuaCK+r2+WP2aBCYfdfD9+UpWK8= jerry@rafiki]
     install-server: true
-  storage:
+  torage:
     config:
     - type: disk
-      match: 
+      match:
         size: largest
-      #path: /dev/sdb
-      path: /dev/sda
+      path: /dev/sdb
       wipe: superblock
       preserve: false
       name: ''
       grub_device: false
-      id: disk-sda
+      id: disk-sdb
     - name: vg1
       devices:
-      - disk-sda
+      - disk-sdb
       preserve: false
       id: lvm_volgroup-0
       type: lvm_volgroup
     - name: lv-0
       volgroup: lvm_volgroup-0
-      sizing-policy: all
+      size: -1
       wipe: superblock
       preserve: false
       path: /dev/vg1/lv-0
@@ -76,28 +75,27 @@ autoinstall:
       id: format-4
       type: format
     - ptable: gpt
-      wipe: superblock-recursive
-      preserve: false
+      path: /dev/sda
+      preserve: true
       name: ''
       grub_device: true
+      id: disk-sda
       type: disk
-      id: disk-sdb 
       match:
         size: smallest
-      #path: /dev/sda
-      path: /dev/sdb
-    - device: disk-sdb
+    - device: disk-sda
       size: 1048576
       flag: bios_grub
       number: 1
-      preserve: false
+      preserve: true
       grub_device: false
       offset: 1048576
-      #path: /dev/sda1
-      path: /dev/sdb1
-      id: partition-sdb1
+      partition_type: 21686148-6449-6e6f-744e-656564454649
+      path: /dev/sda1
+      uuid: f0e4c64f-18f4-4111-a886-f4b8b488e9c1
+      id: partition-sda1
       type: partition
-    - device: disk-sdb
+    - device: disk-sda
       size: 1073741824
       wipe: superblock
       flag: linux
@@ -105,32 +103,37 @@ autoinstall:
       preserve: true
       grub_device: false
       offset: 2097152
-      path: /dev/sdb2
-      id: partition-sdb2
+      partition_type: 0fc63daf-8483-4772-8e79-3d69d8477de4
+      path: /dev/sda2
+      uuid: 867afb86-9bc7-4f6d-99fb-fad05cd8fac2
+      id: partition-sda2
       type: partition
     - fstype: ext4
-      volume: partition-sdb2
+      volume: partition-sda2
       preserve: false
       id: format-0
       type: format
-    - device: disk-sdb
+    - device: disk-sda
       size: 84822458368
+      flag: linux
       number: 3
       preserve: true
       grub_device: false
       offset: 1075838976
-      path: /dev/sdb3
-      id: partition-sdb3
+      partition_type: 0fc63daf-8483-4772-8e79-3d69d8477de4
+      path: /dev/sda3
+      uuid: ccb8c889-e0ac-4086-bd6e-5591fc4e3f2e
+      id: partition-sda3
       type: partition
     - name: vg0
       devices:
-      - partition-sdb3
+      - partition-sda3
       preserve: true
       id: lvm-volgroup-vg0
       type: lvm_volgroup
     - name: lv-0
       volgroup: lvm-volgroup-vg0
-      size: -1
+      size: 53687091200B
       wipe: superblock
       preserve: true
       path: /dev/vg0/lv-0
@@ -144,6 +147,23 @@ autoinstall:
     - path: /
       device: format-1
       id: mount-1
+      type: mount
+    - name: lv-1
+      volgroup: lvm-volgroup-vg0
+      size: 31134318592B
+      wipe: superblock
+      preserve: true
+      path: /dev/vg0/lv-1
+      id: lvm-partition-lv-1
+      type: lvm_partition
+    - fstype: ext4
+      volume: lvm-partition-lv-1
+      preserve: false
+      id: format-2
+      type: format
+    - path: /home
+      device: format-2
+      id: mount-2
       type: mount
     - path: /data
       device: format-4
