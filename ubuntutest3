@@ -46,18 +46,13 @@ autoinstall:
     install-server: true
   storage:
     config:
-      - id: disk-os
-        type: disk
-        match:
-          size: smallest
-        ptable: gpt
-        grub_device: true
 
       - id: disk-data
         type: disk
         match:
           size: largest
         grub_device: false
+        wipe: superblock-recursive
 
       - id: vg1-data
         devices:
@@ -70,6 +65,14 @@ autoinstall:
         name: lv1-data
         size: -1
         type: lvm_partition
+
+      - id: disk-os
+        type: disk
+        match:
+          size: smallest
+        ptable: gpt
+        grub_device: true
+        wipe: superblock-recursive
 
       - id: bios
         type: partition
@@ -131,6 +134,6 @@ autoinstall:
         type: mount
         device: lv1-data_fs
         path: /data
-        
+
   updates: security
   version: 1
