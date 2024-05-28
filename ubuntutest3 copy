@@ -53,24 +53,6 @@ autoinstall:
         ptable: gpt
         grub_device: true
 
-      - id: disk-data
-        type: disk
-        match:
-          size: largest
-        grub_device: false
-
-      - id: vg1-data
-        devices:
-        - disk-data
-        name: vg1-data
-        type: lvm_volgroup
-
-      - id: lv1-data
-        volgroup: vg1-data
-        name: lv1-data
-        size: -1
-        type: lvm_partition
-
       - id: bios
         type: partition
         partition_type: 21686148-6449-6e6f-744e-656564454649
@@ -100,12 +82,12 @@ autoinstall:
         type: lvm_partition
         name: root_lv
         volgroup: vg0
-        size: -1
+        size: 45G
 
-      - id: lv1-data_fs
-        type: format
-        volume: lv1-data
-        fstype: ext4      
+      #- id: bios_fs
+      #  type: format
+      #  volume: bios
+        
 
       - id: bootpart_fs
         type: format
@@ -126,11 +108,6 @@ autoinstall:
         type: mount
         device: root_lv_fs
         path: /
-        
-      - id: lv1-data-mount
-        type: mount
-        device: lv1-data_fs
-        path: /data
         
   updates: security
   version: 1
