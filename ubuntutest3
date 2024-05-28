@@ -87,9 +87,9 @@ autoinstall:
         volgroup: vg0
         size: 45G
 
-      - id: bios_fs
-        type: format
-        volume: bios
+      #- id: bios_fs
+      #  type: format
+      #  volume: bios
         
 
       - id: bootpart_fs
