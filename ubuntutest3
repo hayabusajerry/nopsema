@@ -45,9 +45,70 @@ autoinstall:
     authorized-keys: [ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDIArpnnfDHsgNxEVVjQa2jsqdwqpo7WajcDaU8VHGMmZuECsyU2X1+vdavoK8PObGFaoPeI5yLLiDWCKdPEMsg9s5JBui05tevHwmGBqDxTBf3RJui5J9bpV+V8XLIiYSGbdxDzc74Ue9e65iU6Z+GedWjrUYlysKit5dlD/m/y8cneP68Bf+sIMVrOvWTu3x5H5FHs0hmZQ5XTYh1arsLWqfy1CWtfNsNBT4CfypfUWe9mf0hXX5rRWgDV5PmnsOMwv5c8Lp3RyM/pleKDRSiP/v1ilMOkJsRCJ56ptOP6rOhNwgxF7dw5oamn1llXXhbHGUEBfNIib1yGBsJnDcfrejRubbexledLBcEyzhFMsCOntesVNRZtR+fmFnU76hPyR1R3CTdcZjNiIWEA63EWP87V+9w/zUFq+Ldzmv0ClzkngenfNERQ/zdJikQIzYFCf7FSw3QKC0qsi0/C7LHBZSeFd0LeaolURYyBuaCK+r2+WP2aBCYfdfD9+UpWK8= jerry@rafiki]
     install-server: true
   storage:
-    layout:
-      name: lvm
-      match:
-        size: smallest
+    #layout:
+    #  name: lvm
+    #  sizing-policy: all
+    config:
+      - id: disk-os
+        type: disk
+        match:
+          size: smallest
+        ptable: gpt
+
+      - id: bios
+        type: partition
+        partition_type: 21686148-6449-6e6f-744e-656564454649
+        device: disk-os
+        size: 1048576
+        flag: bios_grub
+        offset: 1048576
+        grub_device: true
+
+      - id: bootpart
+        type: partition
+        device: disk-os
+        size: 1G
+
+      - id: pvpart
+        type: partition
+        device: disk-os
+        size: -1
+
+      - id: vg0
+        type: lvm_volgroup
+        name: vg0
+        devices: pvpart
+
+      - id: root_lv
+        type: lvm_partition
+        name: root_lv
+        volgroup: vg0
+        size: 45G
+
+      - id: boot_fs
+        type: format
+        volume: efipart
+        fstype: fat32
+
+      - id: bootpart_fs
+        type: format
+        volume: bootpart
+        fstype: ext4
+
+      - id: root_lv_fs
+        type: format
+        volume: root_lv
+        fstype: ext4
+
+      - id: bootpart-mount
+        type: mount
+        device: bootpart_fs
+        path: /boot
+
+      - id: root_lv_mount
+        type: mount
+        device: root_lv_fs
+        path: /
+        
   updates: security
   version: 1
