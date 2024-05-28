@@ -120,16 +120,16 @@ autoinstall:
         volume: root_lv
         fstype: ext4
 
+      - id: root_lv_mount
+        type: mount
+        device: root_lv_fs
+        path: /
+
       - id: bootpart-mount
         type: mount
         device: bootpart_fs
         path: /boot
 
-      - id: root_lv_mount
-        type: mount
-        device: root_lv_fs
-        path: /
-        
       - id: lv1-data-mount
         type: mount
         device: lv1-data_fs
