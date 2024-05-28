@@ -77,7 +77,8 @@ autoinstall:
       - id: vg0
         type: lvm_volgroup
         name: vg0
-        devices: pvpart
+        devices: 
+        - pvpart
 
       - id: root_lv
         type: lvm_partition
