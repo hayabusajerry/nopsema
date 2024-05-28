@@ -54,6 +54,7 @@ autoinstall:
         match:
           size: smallest
         ptable: gpt
+        grub_device: true
 
       - id: bios
         type: partition
@@ -62,7 +63,7 @@ autoinstall:
         size: 1048576
         flag: bios_grub
         offset: 1048576
-        grub_device: true
+        grub_device: false
 
       - id: bootpart
         type: partition
