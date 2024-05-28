@@ -90,7 +90,7 @@ autoinstall:
       - id: bios_fs
         type: format
         volume: bios
-        fstype: fat32
+        
 
       - id: bootpart_fs
         type: format
