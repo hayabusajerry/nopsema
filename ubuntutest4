@@ -1,5 +1,7 @@
 #cloud-config
 autoinstall:
+  interactive-sections:
+    - active-directory
   apt:
     geoip: true
     mirror-selection:
