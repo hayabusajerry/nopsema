@@ -1,7 +1,5 @@
 #cloud-config
 autoinstall:
-  interactive-sections:
-    - active-directory
   apt:
     geoip: true
     mirror-selection:
@@ -17,7 +15,7 @@ autoinstall:
   drivers:
     install: false
   identity:
-    hostname: ubuntutest4
+    hostname: Nopsema1
     password: $6$RycIl1LwdIHXoBIM$q4U9MgvHZCR.KJeeocDVlT2gUkawZRNIMYtTecEg9AYL2sSMv.1TRJTQbs0IoeL.PfFiomhR0dtFySfwoeIC61
     realname: Nopsema Admin
     username: nopsema
@@ -36,8 +34,8 @@ autoinstall:
   oem:
     install: auto
   active-directory:
-    admin-name: jerryad
-    domain-name: perseus-it.lan
+    admin-name: Nopsema
+    domain-name: nopsema.gov.au
   packages:
     - linux-virtual
     - linux-cloud-tools-virtual
