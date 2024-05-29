@@ -155,6 +155,8 @@ autoinstall:
         url: "https://landscape.nopsema.gov.au/message-system"
         ping_url: "http://landscape.nopsema.gov.au/ping"
         data_path: "/var/lib/landscape/client"
-        tags: "server,on prem"
+        tags: "server,onprem"
+        computer_title: Nopsema1
+        account_name: "standalone"
   
   version: 1
