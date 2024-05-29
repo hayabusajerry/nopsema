@@ -33,9 +33,9 @@ autoinstall:
     version: 2
   oem:
     install: auto
-    active-directory:
-      admin-name: jerryad
-      domain-name: perseus-it.lan
+  active-directory:
+    admin-name: jerryad
+    domain-name: perseus-it.lan
   packages:
     - linux-virtual
     - linux-cloud-tools-virtual
