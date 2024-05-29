@@ -151,7 +151,8 @@ autoinstall:
         url: "https://landscape.perseus-it.lan/message-system"
         ping_url: "http://landscape.perseus-it.lan/ping"
         data_path: "/var/lib/landscape/client"
-        tags: "server,on prem"
+        computer_title: 'hostname -s'
+        tags: "server,onprem"
         account_name: "standalone"
 
   updates: security
