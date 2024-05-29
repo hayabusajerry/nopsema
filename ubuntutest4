@@ -15,10 +15,10 @@ autoinstall:
   drivers:
     install: false
   identity:
-    hostname: ubuntutest3
+    hostname: ubuntutest4
     password: $6$RycIl1LwdIHXoBIM$q4U9MgvHZCR.KJeeocDVlT2gUkawZRNIMYtTecEg9AYL2sSMv.1TRJTQbs0IoeL.PfFiomhR0dtFySfwoeIC61
-    realname: Jerry Carter
-    username: jerry
+    realname: Nopsema Admin
+    username: nopsema
   kernel:
     package: linux-generic
   keyboard:
@@ -33,6 +33,9 @@ autoinstall:
     version: 2
   oem:
     install: auto
+    active-directory:
+      admin-name: jerryad
+      domain-name: perseus-it.lan
   packages:
     - linux-virtual
     - linux-cloud-tools-virtual
@@ -46,12 +49,33 @@ autoinstall:
     install-server: true
   storage:
     config:
+
+      - id: disk-data
+        type: disk
+        match:
+          size: largest
+        grub_device: false
+        wipe: superblock-recursive
+
+      - id: vg1-data
+        devices:
+        - disk-data
+        name: vg1-data
+        type: lvm_volgroup
+
+      - id: lv1-data
+        volgroup: vg1-data
+        name: lv1-data
+        size: -1
+        type: lvm_partition
+
       - id: disk-os
         type: disk
         match:
           size: smallest
         ptable: gpt
         grub_device: true
+        wipe: superblock-recursive
 
       - id: bios
         type: partition
@@ -82,12 +106,12 @@ autoinstall:
         type: lvm_partition
         name: root_lv
         volgroup: vg0
-        size: 45G
+        size: 50G
 
-      #- id: bios_fs
-      #  type: format
-      #  volume: bios
-        
+      - id: lv1-data_fs
+        type: format
+        volume: lv1-data
+        fstype: ext4      
 
       - id: bootpart_fs
         type: format
@@ -99,15 +123,20 @@ autoinstall:
         volume: root_lv
         fstype: ext4
 
+      - id: root_lv_mount
+        type: mount
+        device: root_lv_fs
+        path: /
+
       - id: bootpart-mount
         type: mount
         device: bootpart_fs
         path: /boot
 
-      - id: root_lv_mount
+      - id: lv1-data-mount
         type: mount
-        device: root_lv_fs
-        path: /
-        
+        device: lv1-data_fs
+        path: /data
+
   updates: security
   version: 1
