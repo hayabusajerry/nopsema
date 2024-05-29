@@ -152,6 +152,7 @@ autoinstall:
         ping_url: "http://landscape.perseus-it.lan/ping"
         data_path: "/var/lib/landscape/client"
         tags: "server,on prem"
+        account_name: "standalone"
 
   updates: security
   version: 1
