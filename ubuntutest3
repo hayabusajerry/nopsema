@@ -136,18 +136,15 @@ autoinstall:
         path: /data
 
   user-data:
-    active-directory:
-      admin-name: jerryad
-      domain-name: perseus-it.lan
     runcmd:
         - sudo hostnamectl set-hostname "`hostname -s`.perseus-it.lan" 
-        #- sudo apt install -y realmd libnss-sss libpam-sss sssd sssd-tools adcli samba-common-bin oddjob oddjob-mkhomedir policykit-1 packagekit
-        #- echo Bandit1200! | sudo realm join -U jerryad --client-software=sssd  perseus-it.lan # Needs to be replaced with keytab functionality
-        #- sudo realm permit -g "Domain Users"@perseus-it.lan
-        #- sudo sed -i -e 's/use_fully_qualified_names = True/use_fully_qualified_names = False/g' /etc/sssd/sssd.conf
-        #- sudo sed  -i -e '$a\'$'\n''session optional        pam_mkhomedir.so skel=/etc/skel umask=077' /etc/pam.d/common-session
-        #- sudo apt install -y landscape-client
-        #- export LANDSCAPE_ACCOUNT_NAME=standalone; export LANDSCAPE_FQDN=landscape.perseus-it.lan; export LANDSCAPE_COMPUTER_TITLE=`hostname -s`; sudo landscape-config --silent --account-name="${LANDSCAPE_ACCOUNT_NAME}" --computer-title="${LANDSCAPE_COMPUTER_TITLE}" --tags='' --script-users='nobody,landscape,root' --ping-url="http://${LANDSCAPE_FQDN}/ping" --url="https://${LANDSCAPE_FQDN}/message-system"
+        - sudo apt install -y realmd libnss-sss libpam-sss sssd sssd-tools adcli samba-common-bin oddjob oddjob-mkhomedir policykit-1 packagekit
+        - echo Bandit1200! | sudo realm join -U jerryad --client-software=sssd  perseus-it.lan # Needs to be replaced with keytab functionality
+        - sudo realm permit -g "Domain Users"@perseus-it.lan
+        - sudo sed -i -e 's/use_fully_qualified_names = True/use_fully_qualified_names = False/g' /etc/sssd/sssd.conf
+        - sudo sed  -i -e '$a\'$'\n''session optional        pam_mkhomedir.so skel=/etc/skel umask=077' /etc/pam.d/common-session
+        - sudo apt install -y landscape-client
+        - export LANDSCAPE_ACCOUNT_NAME=standalone; export LANDSCAPE_FQDN=landscape.perseus-it.lan; export LANDSCAPE_COMPUTER_TITLE=`hostname -s`; sudo landscape-config --silent --account-name="${LANDSCAPE_ACCOUNT_NAME}" --computer-title="${LANDSCAPE_COMPUTER_TITLE}" --tags='' --script-users='nobody,landscape,root' --ping-url="http://${LANDSCAPE_FQDN}/ping" --url="https://${LANDSCAPE_FQDN}/message-system"
     
     landscape:
      client:
