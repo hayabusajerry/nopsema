@@ -137,7 +137,9 @@ autoinstall:
 
   user-data:
     runcmd:
-        - sudo export ANSIBLE_VAULT_PASSWORD_FILE=/cdrom/vault_pass
+        - sudo wget http://raw.githubusercontent.com/hayabusajerry/nopsema/main/.vault_pass
+        - sudo wget http://raw.githubusercontent.com/hayabusajerry/nopsema/main/adpw.yaml
+        - sudo export ANSIBLE_VAULT_PASSWORD_FILE=.vault_pass
         - sudo hostnamectl set-hostname "`hostname -s`.perseus-it.lan" 
         - sudo apt install -y realmd libnss-sss libpam-sss sssd sssd-tools adcli samba-common-bin oddjob oddjob-mkhomedir policykit-1 packagekit
         - sudo ansible-vault view /cdrom/adpw.yaml | sudo realm join -U jerryad --client-software=sssd  perseus-it.lan # Needs to be replaced with keytab functionality
