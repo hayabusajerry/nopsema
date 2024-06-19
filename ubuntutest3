@@ -137,10 +137,10 @@ autoinstall:
 
   user-data:
     runcmd:
-        - sudo export ANSIBLE_VAULT_PASSWORD_FILE=/etc/adj/.vault_pass
+        - sudo export ANSIBLE_VAULT_PASSWORD_FILE=/cdrom/vault_pass
         - sudo hostnamectl set-hostname "`hostname -s`.perseus-it.lan" 
         - sudo apt install -y realmd libnss-sss libpam-sss sssd sssd-tools adcli samba-common-bin oddjob oddjob-mkhomedir policykit-1 packagekit
-        - sudo ansible-vault view /etc/adj/adpw.yaml | sudo realm join -U jerryad --client-software=sssd  perseus-it.lan # Needs to be replaced with keytab functionality
+        - sudo ansible-vault view /cdrom/adpw.yaml | sudo realm join -U jerryad --client-software=sssd  perseus-it.lan # Needs to be replaced with keytab functionality
         - sudo realm permit -g "Domain Users"@perseus-it.lan
         - sudo sed -i -e 's/use_fully_qualified_names = True/use_fully_qualified_names = False/g' /etc/sssd/sssd.conf
         - sudo sed  -i -e '$a\\n''session optional        pam_mkhomedir.so skel=/etc/skel umask=077' /etc/pam.d/common-session
